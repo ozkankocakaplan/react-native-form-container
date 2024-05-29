@@ -1,0 +1,26 @@
+{
+  "name": "react-native-form-container",
+  "version": "1.0.0",
+  "description": "A form container component for React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "'react-native'",
+    "'form'",
+    "'validation'",
+    "'form-container'"
+  ],
+  "author": "Özkan Kocakaplan",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-i18next": "^8.1.0",
+    "@types/react-native": "^0.73.0",
+    "@types/styled-components": "^5.1.34"
+  },
+  "dependencies": {
+    "react-native-keyboard-aware-scroll-view": "^0.9.5"
+  }
+}
