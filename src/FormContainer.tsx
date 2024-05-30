@@ -5,11 +5,10 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { View } from "react-native";
+import { LogBox, View, ViewProps } from "react-native";
 import { useTranslation } from "react-i18next";
 
-export interface FormContainerProps {
+export interface FormContainerProps extends ViewProps {
   children: ReactNode;
   gap?: number;
   formId?: string;
@@ -20,7 +19,7 @@ export interface FormContainerProps {
 export interface FormContainerRef {
   validate: (errorData?: any) => boolean;
 }
-
+LogBox.ignoreLogs([/react-i18next::/]);
 export default function FormContainer(props: FormContainerProps) {
   const {
     children: initialChildren,
@@ -81,7 +80,6 @@ export default function FormContainer(props: FormContainerProps) {
           }
         }
       });
-
       setErrors(errorFields);
     } else {
       setErrors(errorData);
@@ -96,13 +94,12 @@ export default function FormContainer(props: FormContainerProps) {
           if (childProps.id) {
             if (childProps.required) {
               let error = errors[childProps.id];
-
               if (childProps.value === "" && error) {
                 if (props.autoErrorMessages) {
+                  childProps.errorMessage = t(childProps.id);
+                } else {
                   if (error) {
                     childProps.errorMessage = error;
-                  } else {
-                    childProps.errorMessage = t(childProps.id);
                   }
                 }
               } else {
@@ -113,6 +110,11 @@ export default function FormContainer(props: FormContainerProps) {
               if (!childProps.checked) {
                 if (props.autoErrorMessages) {
                   childProps.errorMessage = t(childProps.id);
+                } else {
+                  let error = errors[childProps.id];
+                  if (error) {
+                    childProps.errorMessage = error;
+                  }
                 }
               } else {
                 delete childProps.errorMessage;
@@ -127,22 +129,5 @@ export default function FormContainer(props: FormContainerProps) {
       })
     );
   }, [initialChildren, errors]);
-  return (
-    <KeyboardAwareScrollView
-      extraHeight={100}
-      enableOnAndroid={true}
-      contentContainerStyle={{ flexGrow: 1 }}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-    >
-      <View
-        style={{
-          margin: 20,
-          gap: gap,
-        }}
-      >
-        {children}
-      </View>
-    </KeyboardAwareScrollView>
-  );
+  return <View {...props}>{children}</View>;
 }

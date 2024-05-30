@@ -1,7 +1,7 @@
 declare module "react-native-form-container" {
   import { MutableRefObject, ReactNode } from "react";
-
-  export interface FormContainerProps {
+  import { ViewProps } from "react-native";
+  export interface FormContainerProps extends ViewProps {
     children: ReactNode;
     gap?: number;
     formId?: string;
