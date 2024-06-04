@@ -3,9 +3,7 @@ declare module "react-native-form-container" {
   import { ViewProps } from "react-native";
   export interface FormContainerProps extends ViewProps {
     children: ReactNode;
-    gap?: number;
     formId?: string;
-    autoErrorMessages?: boolean;
     formContainerRef?: MutableRefObject<FormContainerRef | null>;
   }
 

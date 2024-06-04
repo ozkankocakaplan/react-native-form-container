@@ -30,6 +30,127 @@ Thank you for your support and interest! I need amazing community members like y
 
 ## Installation
 
+# react-native-form-container
+
+`react-native-form-container` is a simple and customizable form container component for React Native. This library simplifies form validation and manages form elements efficiently.
+
+## Features
+
+- Easy form management
+- Flexible and customizable
+- Simple validation for form elements
+
+## Installation
+
+To add the `react-native-form-container` library to your project, use the following command:
+
 ```sh
 npm install react-native-form-container
+```
+
+## Usage
+
+Below is an example showing how to use the react-native-form-container library.
+
+## Basic Usage
+
+```sh
+import React, { useState, useRef } from "react";
+import { View, Text, SafeAreaView, Button } from "react-native";
+import FormContainer ,{FormInput} from "react-native-form-container";
+
+
+export default function App() {
+  const formContainerRef = useRef(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  return (
+    <SafeAreaView>
+      <FormContainer
+        style={{ gap: 10, margin: 10 }}
+        formContainerRef={formContainerRef}
+        formId="addStudentForm"
+      >
+        <FormInput
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="First Name"
+          id="firstName"
+          required
+        />
+        <FormInput
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+          id="lastName"
+          required
+        />
+      </FormContainer>
+      <Button
+        onPress={() => {
+          const errorMessages = {
+            firstName: "Please enter your first name",
+            lastName: "Please enter your last name",
+          };
+          const result = formContainerRef.current?.validate(errorMessages);
+          console.log(result);
+        }}
+        title="Save"
+      />
+    </SafeAreaView>
+  );
+}
+```
+
+| PropType         | Description                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------- |
+| style            | PropTypes.object                                                                                     |
+| formId           | PropTypes.string                                                                                     |
+| formContainerRef | PropTypes.oneOfType([ PropTypes.func, PropTypes.shape({ current: PropTypes.instanceOf(Element) }) ]) |
+
+## Form Validation
+
+To trigger form validation, use the validate method of the form container reference. This method checks the validity of the fields and returns appropriate error messages for invalid fields.
+
+```sh
+const result = formContainerRef.current?.validate(errorMessages);
+console.log(result);
+```
+
+## Error Messages
+
+You can pass error messages as an object to the validate method for each input component. For example:
+
+```sh
+const errorMessages = {
+  firstName: "Please enter your first name",
+  lastName: "Please enter your last name",
+};
+```
+
+### validate(errorMessages)
+
+Method: `validate(errorMessages: object) -> boolean`
+
+This method validates the validity of inputs in the form.
+
+#### Parameters:
+
+- `errorMessages`: An object. Each key represents an input's identifier (ID), and its value is an error message.
+
+#### Return Value:
+
+- `true`: If all inputs are valid.
+- `false`: If at least one input is invalid or the `errorMessages` parameter is not a valid object.
+
+#### Example Usage:
+
+```javascript
+const errorMessages = {
+  firstName: "Please enter your first name",
+  lastName: "Please enter your last name",
+};
+
+const result = formContainerRef.current?.validate(errorMessages);
 ```

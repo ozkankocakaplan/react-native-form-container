@@ -10,9 +10,8 @@ import { useTranslation } from "react-i18next";
 
 export interface FormContainerProps extends ViewProps {
   children: ReactNode;
-  gap?: number;
   formId?: string;
-  autoErrorMessages?: boolean;
+  errorMessageField?: string;
   formContainerRef?: MutableRefObject<FormContainerRef | null>;
 }
 
@@ -23,9 +22,9 @@ LogBox.ignoreLogs([/react-i18next::/]);
 export default function FormContainer(props: FormContainerProps) {
   const {
     children: initialChildren,
-    gap = 10,
     formContainerRef,
     formId,
+    errorMessageField = "errorMessage",
   } = props;
   const { t } = useTranslation(formId);
   const [children, setChildren] = useState<ReactNode[] | any>(
@@ -44,7 +43,10 @@ export default function FormContainer(props: FormContainerProps) {
       if (React.isValidElement(child)) {
         const childProps = { ...child.props };
         if (childProps.id) {
-          if (childProps.required && childProps.value === "") {
+          if (
+            (childProps.required && childProps?.value === "") ||
+            childProps.value === undefined
+          ) {
             isEmpty = true;
           }
         }
@@ -71,7 +73,7 @@ export default function FormContainer(props: FormContainerProps) {
 
   const handleErrorMessage = useCallback((errorData?: any) => {
     let errorFields = {} as any;
-    if (props.autoErrorMessages && !errorData) {
+    if (props.formId && !errorData) {
       React.Children.forEach(initialChildren, (child) => {
         if (React.isValidElement(child)) {
           const childProps = { ...child.props };
@@ -93,35 +95,38 @@ export default function FormContainer(props: FormContainerProps) {
 
           if (childProps.id) {
             if (childProps.required) {
-              let error = errors[childProps.id];
-              if (childProps.value === "" && error) {
-                if (props.autoErrorMessages) {
-                  childProps.errorMessage = t(childProps.id);
+              let error = errors?.[childProps.id];
+              if (
+                (childProps?.value === "" || childProps?.value === undefined) &&
+                error
+              ) {
+                if (props.formId) {
+                  childProps[errorMessageField] = t(childProps?.id);
                 } else {
                   if (error) {
-                    childProps.errorMessage = error;
+                    childProps[errorMessageField] = error;
                   }
                 }
               } else {
-                delete childProps.errorMessage;
+                delete childProps[errorMessageField];
               }
             }
             if (childProps.type === "checkbox") {
               if (!childProps.checked) {
-                if (props.autoErrorMessages) {
-                  childProps.errorMessage = t(childProps.id);
+                if (props.formId) {
+                  childProps[errorMessageField] = t(childProps.id);
                 } else {
                   let error = errors[childProps.id];
                   if (error) {
-                    childProps.errorMessage = error;
+                    childProps[errorMessageField] = error;
                   }
                 }
               } else {
-                delete childProps.errorMessage;
+                delete childProps[errorMessageField];
               }
             }
           } else {
-            delete childProps.errorMessage;
+            delete childProps[errorMessageField];
           }
           return React.cloneElement(child, childProps);
         }

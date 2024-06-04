@@ -10,6 +10,7 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
+  Text,
 } from "react-native";
 interface InputProps extends TextInputProps {
   iconPosition?: "left" | "right";
@@ -38,7 +39,7 @@ export default function Input({
   activeBorder = "green",
   inputBorder = "#143722",
   errorMessageComponent,
-  errorMessageTextStyle,
+  errorMessageTextStyle = { color: "red", marginTop: 5 },
   errorMessageContainerStyle,
   ...props
 }: InputProps) {
@@ -74,9 +75,6 @@ export default function Input({
         secureTextEntry={props.secureTextEntry && !passwordShow}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        placeholder={
-          required ? `${props.placeholder} *` : `${props.placeholder}`
-        }
         style={[
           styles.input,
           {
