@@ -27,7 +27,7 @@ interface InputProps extends TextInputProps {
   errorMessageTextStyle?: StyleProp<TextStyle>;
   errorMessageContainerStyle?: StyleProp<ViewStyle>;
 }
-export default function Input({
+export default function FormInput({
   iconPosition = "left",
   icon = undefined,
   inputSize = "md",

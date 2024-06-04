@@ -6,7 +6,7 @@ The purpose of this project is to provide a simple and flexible form validation 
 
 If you would like to support the work I do on this project, you can buy me a coffee through Buy Me a Coffee. Every small contribution will be a big support for the development and sustainability of the project.
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange.svg)](https://buymeacoffee.com/ozkankocakaplan)
+[<img src="https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange.svg" alt="Buy Me a Coffee" height="50">](https://buymeacoffee.com/ozkankocakaplan)
 
 ## How Can You Help?
 
@@ -47,11 +47,11 @@ Below is an example showing how to use the react-native-form-container library.
 ```sh
 import React, { useState, useRef } from "react";
 import { View, Text, SafeAreaView, Button } from "react-native";
-import FormContainer ,{FormInput} from "react-native-form-container";
+import FormContainer, {   FormContainerRef,   FormInput, } from 'react-native-form-container';
 
 
 export default function App() {
-  const formContainerRef = useRef(null);
+  const formContainerRef = useRef<FormContainerRef>(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
