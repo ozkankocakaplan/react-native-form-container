@@ -1,6 +1,6 @@
 {
   "name": "react-native-form-container",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "A form container component for React Native",
   "main": "src/index.js",
   "types": "index.d.ts",
