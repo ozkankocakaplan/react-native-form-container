@@ -38,7 +38,7 @@ export default function FormContainer(props: FormContainerProps) {
   }, []);
 
   const inputCheckValidation = useCallback((): boolean => {
-    let isEmpty = false;
+    let isEmpty = true;
     React.Children.forEach(initialChildren, (child) => {
       if (React.isValidElement(child)) {
         const childProps = { ...child.props };
@@ -47,7 +47,7 @@ export default function FormContainer(props: FormContainerProps) {
             (childProps.required && childProps?.value === "") ||
             childProps.value === undefined
           ) {
-            isEmpty = true;
+            isEmpty = false;
           }
         }
       }
