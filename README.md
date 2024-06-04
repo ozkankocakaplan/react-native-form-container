@@ -60,7 +60,6 @@ export default function App() {
       <FormContainer
         style={{ gap: 10, margin: 10 }}
         formContainerRef={formContainerRef}
-        formId="addStudentForm"
       >
         <FormInput
           value={firstName}
