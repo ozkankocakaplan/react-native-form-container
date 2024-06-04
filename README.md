@@ -143,3 +143,77 @@ const errorMessages = {
 
 const result = formContainerRef.current?.validate(errorMessages);
 ```
+
+## Alternative Input Component
+
+In this example, an alternative input component named `AlternativeInput` is defined. This component accepts props of type `FormInputProps`, which presumably includes properties required by a form input component.
+
+### Usage:
+
+To use `AlternativeInput`, simply pass the necessary props expected by a form input component.
+
+```jsx
+import React, { useState, useRef } from "react";
+import { View, Text, SafeAreaView, Button, TextInput } from "react-native";
+import FormContainer, {
+  FormContainerRef,
+  FormInputProps,
+} from "react-native-form-container";
+export default function App() {
+  const formContainerRef = useRef < FormContainerRef > null;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const AlternativeInput = (props: FormInputProps) => {
+    return (
+      <View>
+        <TextInput
+          style={{
+            borderWidth: 1,
+            borderColor: "black",
+            padding: 10,
+            borderRadius: 5,
+          }}
+          {...props}
+        />
+        <View style={{ marginTop: 10 }}>
+          {props.errorMessage && <Text>{props.errorMessage}</Text>}
+        </View>
+      </View>
+    );
+  };
+  return (
+    <SafeAreaView>
+      <FormContainer
+        style={{ gap: 10, margin: 10 }}
+        formContainerRef={formContainerRef}
+      >
+        <AlternativeInput
+          id="firstName"
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="First Name"
+          required
+        />
+        <AlternativeInput
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+          id="lastName"
+          required
+        />
+      </FormContainer>
+
+      <Button
+        onPress={() => {
+          const errorMessages = {
+            firstName: "Please enter your first name",
+            lastName: "Please enter your last name",
+          };
+          formContainerRef.current?.validate(errorMessages);
+        }}
+        title="Save"
+      />
+    </SafeAreaView>
+  );
+}
+```
