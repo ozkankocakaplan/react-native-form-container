@@ -1,6 +1,7 @@
 # React Native Form Container
 
 The purpose of this project is to provide a simple and flexible form validation library for React Native applications. With this library, developers can easily implement form validation logic and handle errors in their React Native forms.
+<a target="_blank" href="https://medium.com/@ozkankocakaplan07/simple-form-validation-with-react-native-form-container-a198f5fd8597">Medium</a>
 
 ## Support the Project
 
