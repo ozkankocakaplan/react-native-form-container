@@ -22,10 +22,7 @@
   "author": "Özkan Kocakaplan",
   "license": "ISC",
   "devDependencies": {
-    "@types/react-i18next": "^8.1.0",
     "@types/react-native": "^0.60.0"
   },
-  "dependencies": {
-    "react-i18next": "^14.1.2"
-  }
+  "dependencies": {}
 }

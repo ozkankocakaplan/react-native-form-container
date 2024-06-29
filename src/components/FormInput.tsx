@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
@@ -11,11 +11,13 @@ import {
   TextStyle,
   ViewStyle,
   Text,
-} from "react-native";
+} from 'react-native';
+import ValidationFields, {ValidationPasswordOptions} from './ValidationFields';
+
 interface InputProps extends TextInputProps {
-  iconPosition?: "left" | "right";
+  iconPosition?: 'left' | 'right';
   icon?: any;
-  inputSize?: "sm" | "md";
+  inputSize?: 'sm' | 'md';
   enableFocusBorder?: boolean;
   errorMessage?: string;
   required?: boolean;
@@ -26,23 +28,35 @@ interface InputProps extends TextInputProps {
   errorMessageComponent?: any;
   errorMessageTextStyle?: StyleProp<TextStyle>;
   errorMessageContainerStyle?: StyleProp<ViewStyle>;
+  validation?: keyof ValidationFields;
 }
+interface PasswordInputProps extends InputProps {
+  passwordOptions: ValidationPasswordOptions;
+  validation: 'password';
+}
+interface NonPasswordFormInputProps extends InputProps {
+  validation?: Exclude<keyof ValidationFields, 'password'>;
+  passwordOptions?: never;
+}
+
+export type FormInputProps = PasswordInputProps | NonPasswordFormInputProps;
+
 export default function FormInput({
-  iconPosition = "left",
+  iconPosition = 'left',
   icon = undefined,
-  inputSize = "md",
+  inputSize = 'md',
   enableFocusBorder = true,
   errorMessage,
   required = false,
   passwordHideIcon,
   passwordShowIcon,
-  activeBorder = "green",
-  inputBorder = "#143722",
+  activeBorder = 'green',
+  inputBorder = '#143722',
   errorMessageComponent,
-  errorMessageTextStyle = { color: "red", marginTop: 5 },
+  errorMessageTextStyle = {color: 'red', marginTop: 5},
   errorMessageContainerStyle,
   ...props
-}: InputProps) {
+}: FormInputProps) {
   const [passwordShow, setPasswordShow] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -57,18 +71,17 @@ export default function FormInput({
     }
   };
 
-  const size = inputSize === "sm" ? 10 : 15;
-  const iconSize = inputSize === "sm" ? 17 : 20;
+  const size = inputSize === 'sm' ? 10 : 15;
+  const iconSize = inputSize === 'sm' ? 17 : 20;
 
-  const iconSmTop = inputSize === "sm" ? (Platform.OS === "ios" ? 10 : 15) : 20;
-  const iconMdTop = inputSize === "md" ? 15 : 20;
-  const iconTop = inputSize === "sm" ? iconSmTop : iconMdTop;
+  const iconSmTop = inputSize === 'sm' ? (Platform.OS === 'ios' ? 10 : 15) : 20;
+  const iconMdTop = inputSize === 'md' ? 15 : 20;
+  const iconTop = inputSize === 'sm' ? iconSmTop : iconMdTop;
 
-  const inputPaddingHorizontal = inputSize === "sm" ? 33 : 40;
-
+  const inputPaddingHorizontal = inputSize === 'sm' ? 33 : 40;
   return (
     <View>
-      {iconPosition === "left" && icon && icon()}
+      {iconPosition === 'left' && icon && icon()}
       <TextInput
         autoFocus={false}
         {...props}
@@ -80,11 +93,11 @@ export default function FormInput({
           {
             padding: size,
             paddingLeft:
-              iconPosition === "left" && icon !== undefined
+              iconPosition === 'left' && icon !== undefined
                 ? inputPaddingHorizontal
                 : size,
             paddingRight:
-              iconPosition === "right" && icon !== undefined
+              iconPosition === 'right' && icon !== undefined
                 ? inputPaddingHorizontal
                 : size,
             borderColor: isFocused ? activeBorder : inputBorder,
@@ -93,15 +106,14 @@ export default function FormInput({
       />
       {props.secureTextEntry && (
         <TouchableOpacity
-          style={[styles.passwordIcon, { top: iconTop, right: 10 }]}
-          onPress={() => setPasswordShow(!passwordShow)}
-        >
+          style={[styles.passwordIcon, {top: iconTop, right: 10}]}
+          onPress={() => setPasswordShow(!passwordShow)}>
           {passwordShow ? passwordShowIcon() : passwordHideIcon()}
         </TouchableOpacity>
       )}
 
-      {iconPosition === "right" && icon !== undefined && (
-        <View style={[styles.icon, { top: iconTop, right: 10 }]}>{icon()}</View>
+      {iconPosition === 'right' && icon !== undefined && (
+        <View style={[styles.icon, {top: iconTop, right: 10}]}>{icon()}</View>
       )}
       {errorMessage && (
         <View style={errorMessageContainerStyle}>
@@ -118,18 +130,18 @@ export default function FormInput({
 
 const styles = StyleSheet.create({
   input: {
-    width: "100%",
+    width: '100%',
     borderRadius: 10,
-    backgroundColor: "#fff",
-    color: "#143722",
+    backgroundColor: '#fff',
+    color: '#143722',
     borderWidth: 1,
   },
   icon: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
   },
   passwordIcon: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
   },
 });
