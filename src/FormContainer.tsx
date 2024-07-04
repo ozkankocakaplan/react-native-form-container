@@ -5,21 +5,14 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {View, ViewProps} from 'react-native';
+import { View } from 'react-native';
 import {
   isValidation,
   checkPasswordOptions,
-} from './components/ValidationFields';
+} from './Validation';
+import { FormContainerProps } from 'react-native-form-container';
 
-export interface FormContainerProps extends ViewProps {
-  children: ReactNode;
-  errorMessageField?: string;
-  formContainerRef?: MutableRefObject<FormContainerRef | null>;
-}
 
-export interface FormContainerRef {
-  validate: (errorData?: any) => boolean;
-}
 
 export default function FormContainer(props: FormContainerProps) {
   const {
@@ -30,7 +23,7 @@ export default function FormContainer(props: FormContainerProps) {
   const [children, setChildren] = useState<ReactNode[] | any>(
     React.Children.toArray(initialChildren),
   );
-  const [errors, setErrors] = useState<{[key: string]: string | undefined}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string | undefined }>({});
   const checkValidation = useCallback((errorData: any) => {
     handleErrorMessage(errorData);
   }, []);
@@ -39,7 +32,7 @@ export default function FormContainer(props: FormContainerProps) {
     let isEmpty = true;
     React.Children.forEach(initialChildren, child => {
       if (React.isValidElement(child)) {
-        const childProps = {...child.props};
+        const childProps = { ...child.props };
         if (childProps.id) {
           let checkValidation = childProps?.validation;
           if (checkValidation) {
@@ -88,7 +81,7 @@ export default function FormContainer(props: FormContainerProps) {
     setChildren(
       React.Children.map(initialChildren, child => {
         if (React.isValidElement(child)) {
-          var childProps = {...child.props};
+          var childProps = { ...child.props };
 
           if (childProps.id) {
             if (childProps.required) {

@@ -1,14 +1,12 @@
 declare module 'react-native-form-container' {
-  import {MutableRefObject, ReactNode} from 'react';
-  import {ViewProps, TextInputProps} from 'react-native';
+  import { MutableRefObject, ReactNode } from 'react';
+  import { ViewProps, TextInputProps } from 'react-native';
 
   export interface FormContainerProps extends ViewProps {
     children: ReactNode;
-    formId?: string;
     formContainerRef?: MutableRefObject<FormContainerRef | null>;
     errorMessageField?: string;
   }
-
   export interface FormContainerRef {
     validate: (errorData?: any) => boolean;
   }
@@ -16,7 +14,23 @@ declare module 'react-native-form-container' {
   const FormContainer: (props: FormContainerProps) => JSX.Element;
   export default FormContainer;
 
-  interface InputProps extends TextInputProps {
+  export interface ValidationFields {
+    email?: boolean;
+    password?: boolean;
+    text?: boolean;
+    phone?: boolean;
+    number?: boolean;
+  }
+  export interface ValidationPasswordOptions {
+    minLength?: number;
+    speacial?: boolean;
+    upperCase?: boolean;
+    lowerCase?: boolean;
+    number?: boolean;
+  }
+  export type ValidationFieldsKeys = typeof ValidationFields;
+
+  export interface InputProps extends TextInputProps {
     iconPosition?: 'left' | 'right';
     icon?: any;
     inputSize?: 'sm' | 'md';
@@ -31,18 +45,32 @@ declare module 'react-native-form-container' {
     errorMessageTextStyle?: StyleProp<TextStyle>;
     errorMessageContainerStyle?: StyleProp<ViewStyle>;
     validation?: keyof ValidationFields;
+
   }
-  interface PasswordInputProps extends InputProps {
+
+  export interface ValidationProps extends InputProps {
+    required: true;
+    id: string;
+  }
+  export interface NonValidationProps extends InputProps {
+    required?: never;
+    id?: never;
+  }
+
+  export interface PasswordInputProps extends InputProps {
     passwordOptions: ValidationPasswordOptions;
     validation: 'password';
+
   }
-  interface NonPasswordFormInputProps extends InputProps {
+
+  export interface NonPasswordFormInputProps extends InputProps {
     validation?: Exclude<keyof ValidationFields, 'password'>;
     passwordOptions?: never;
   }
 
+  export type FormInputProps = ValidationProps | NonValidationProps;
   export type FormInputProps = PasswordInputProps | NonPasswordFormInputProps;
 
   const FormInput: (props: FormInputProps) => JSX.Element;
-  export {FormInput};
+  export { FormInput };
 }

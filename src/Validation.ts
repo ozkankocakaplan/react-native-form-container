@@ -1,3 +1,6 @@
+import { ValidationFieldsKeys, ValidationPasswordOptions } from "react-native-form-container";
+
+
 export const ValidationFields = {
   email: {
     pattern: {
@@ -40,22 +43,6 @@ export const ValidationFields = {
     },
   },
 };
-export default interface ValidationFields {
-  email?: boolean;
-  password?: boolean;
-  text?: boolean;
-  phone?: boolean;
-  number?: boolean;
-}
-export interface ValidationPasswordOptions {
-  minLength?: number;
-  speacial?: boolean;
-  upperCase?: boolean;
-  lowerCase?: boolean;
-  number?: boolean;
-}
-export type ValidationFieldsKeys = typeof ValidationFields;
-
 export const isValidation = (
   validation: ValidationFieldsKeys,
   value: any,

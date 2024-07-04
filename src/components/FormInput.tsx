@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
@@ -12,34 +12,11 @@ import {
   ViewStyle,
   Text,
 } from 'react-native';
-import ValidationFields, {ValidationPasswordOptions} from './ValidationFields';
+import { FormInputProps } from 'react-native-form-container';
 
-interface InputProps extends TextInputProps {
-  iconPosition?: 'left' | 'right';
-  icon?: any;
-  inputSize?: 'sm' | 'md';
-  enableFocusBorder?: boolean;
-  errorMessage?: string;
-  required?: boolean;
-  passwordShowIcon?: any;
-  passwordHideIcon?: any;
-  activeBorder?: string;
-  inputBorder?: string;
-  errorMessageComponent?: any;
-  errorMessageTextStyle?: StyleProp<TextStyle>;
-  errorMessageContainerStyle?: StyleProp<ViewStyle>;
-  validation?: keyof ValidationFields;
-}
-interface PasswordInputProps extends InputProps {
-  passwordOptions: ValidationPasswordOptions;
-  validation: 'password';
-}
-interface NonPasswordFormInputProps extends InputProps {
-  validation?: Exclude<keyof ValidationFields, 'password'>;
-  passwordOptions?: never;
-}
 
-export type FormInputProps = PasswordInputProps | NonPasswordFormInputProps;
+
+
 
 export default function FormInput({
   iconPosition = 'left',
@@ -53,7 +30,7 @@ export default function FormInput({
   activeBorder = 'green',
   inputBorder = '#143722',
   errorMessageComponent,
-  errorMessageTextStyle = {color: 'red', marginTop: 5},
+  errorMessageTextStyle = { color: 'red', marginTop: 5 },
   errorMessageContainerStyle,
   ...props
 }: FormInputProps) {
@@ -106,14 +83,14 @@ export default function FormInput({
       />
       {props.secureTextEntry && (
         <TouchableOpacity
-          style={[styles.passwordIcon, {top: iconTop, right: 10}]}
+          style={[styles.passwordIcon, { top: iconTop, right: 10 }]}
           onPress={() => setPasswordShow(!passwordShow)}>
           {passwordShow ? passwordShowIcon() : passwordHideIcon()}
         </TouchableOpacity>
       )}
 
       {iconPosition === 'right' && icon !== undefined && (
-        <View style={[styles.icon, {top: iconTop, right: 10}]}>{icon()}</View>
+        <View style={[styles.icon, { top: iconTop, right: 10 }]}>{icon()}</View>
       )}
       {errorMessage && (
         <View style={errorMessageContainerStyle}>
