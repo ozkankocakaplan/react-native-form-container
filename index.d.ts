@@ -1,6 +1,6 @@
 declare module 'react-native-form-container' {
-  import { MutableRefObject, ReactNode } from 'react';
-  import { ViewProps, TextInputProps } from 'react-native';
+  import {MutableRefObject, ReactNode} from 'react';
+  import {ViewProps, TextInputProps} from 'react-native';
 
   export interface FormContainerProps extends ViewProps {
     children: ReactNode;
@@ -45,12 +45,13 @@ declare module 'react-native-form-container' {
     errorMessageTextStyle?: StyleProp<TextStyle>;
     errorMessageContainerStyle?: StyleProp<ViewStyle>;
     validation?: keyof ValidationFields;
-
   }
 
   export interface ValidationProps extends InputProps {
     required: true;
     id: string;
+    validation: Exclude<keyof ValidationFields, 'password'>;
+    pattern?: RegExp;
   }
   export interface NonValidationProps extends InputProps {
     required?: never;
@@ -61,16 +62,23 @@ declare module 'react-native-form-container' {
     passwordOptions: ValidationPasswordOptions;
     validation: 'password';
 
+    required: true;
+    id: string;
   }
 
   export interface NonPasswordFormInputProps extends InputProps {
     validation?: Exclude<keyof ValidationFields, 'password'>;
     passwordOptions?: never;
+
+    id: string;
   }
 
-  export type FormInputProps = ValidationProps | NonValidationProps;
-  export type FormInputProps = PasswordInputProps | NonPasswordFormInputProps;
+  export type FormInputProps =
+    | ValidationProps
+    | NonValidationProps
+    | PasswordInputProps
+    | NonPasswordFormInputProps;
 
   const FormInput: (props: FormInputProps) => JSX.Element;
-  export { FormInput };
+  export {FormInput};
 }

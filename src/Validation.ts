@@ -1,5 +1,7 @@
-import { ValidationFieldsKeys, ValidationPasswordOptions } from "react-native-form-container";
-
+import {
+  ValidationFieldsKeys,
+  ValidationPasswordOptions,
+} from 'react-native-form-container';
 
 export const ValidationFields = {
   email: {
@@ -47,33 +49,49 @@ export const isValidation = (
   validation: ValidationFieldsKeys,
   value: any,
   passwordOptions?: ValidationPasswordOptions,
+  pattern?: RegExp,
 ) => {
   if (value === undefined || value === null || value === '') {
     return false;
   }
   if (validation === 'email') {
-    if (!ValidationFields.email.pattern.value.test(value)) {
+    if (
+      !pattern?.test(value) ??
+      !ValidationFields.email.pattern.value.test(value)
+    ) {
       return false;
     }
   }
   if (validation === 'password') {
     if (passwordOptions?.lowerCase) {
-      if (!ValidationFields.lowerCaseCharacter.pattern.value.test(value)) {
+      if (
+        !pattern?.test(value) ??
+        !ValidationFields.lowerCaseCharacter.pattern.value.test(value)
+      ) {
         return false;
       }
     }
     if (passwordOptions?.upperCase) {
-      if (!ValidationFields.upperCaseCharacter.pattern.value.test(value)) {
+      if (
+        !pattern?.test(value) ??
+        !ValidationFields.upperCaseCharacter.pattern.value.test(value)
+      ) {
         return false;
       }
     }
     if (passwordOptions?.number) {
-      if (!ValidationFields.number.pattern.value.test(value)) {
+      if (
+        !pattern?.test(value) ??
+        !ValidationFields.number.pattern.value.test(value)
+      ) {
         return false;
       }
     }
     if (passwordOptions?.speacial) {
-      if (!ValidationFields.speacialCharacter.pattern.value.test(value)) {
+      if (
+        !pattern?.test(value) ??
+        !ValidationFields.speacialCharacter.pattern.value.test(value)
+      ) {
         return false;
       }
     }
@@ -82,17 +100,26 @@ export const isValidation = (
     }
   }
   if (validation === 'text') {
-    if (!ValidationFields.text.pattern.value.test(value)) {
+    if (
+      !pattern?.test(value) ??
+      !ValidationFields.text.pattern.value.test(value)
+    ) {
       return false;
     }
   }
   if (validation === 'phone') {
-    if (!ValidationFields.phone.pattern.value.test(value)) {
+    if (
+      !pattern?.test(value) ??
+      !ValidationFields.phone.pattern.value.test(value)
+    ) {
       return false;
     }
   }
   if (validation === 'number') {
-    if (!ValidationFields.number.pattern.value.test(value)) {
+    if (
+      !pattern?.test(value) ??
+      !ValidationFields.number.pattern.value.test(value)
+    ) {
       return false;
     }
   }
@@ -117,35 +144,35 @@ export const checkPasswordOptions = (
     };
   }
   if (options?.lowerCase) {
-    if (ValidationFields.lowerCaseCharacter.pattern.value.test(value)) {
+    if (!ValidationFields.lowerCaseCharacter.pattern.value.test(value)) {
       result = {
         lowerCase: true,
       };
     }
   }
   if (options?.upperCase) {
-    if (ValidationFields.upperCaseCharacter.pattern.value.test(value)) {
+    if (!ValidationFields.upperCaseCharacter.pattern.value.test(value)) {
       result = {
         upperCase: true,
       };
     }
   }
   if (options?.number) {
-    if (ValidationFields.number.pattern.value.test(value)) {
+    if (!ValidationFields.number.pattern.value.test(value)) {
       result = {
         number: true,
       };
     }
   }
   if (options?.speacial) {
-    if (ValidationFields.speacialCharacter.pattern.value.test(value)) {
+    if (!ValidationFields.speacialCharacter.pattern.value.test(value)) {
       result = {
         speacial: true,
       };
     }
   }
   if (options?.minLength) {
-    if (ValidationFields.minPassword.pattern.value.test(value)) {
+    if (!ValidationFields.minPassword.pattern.value.test(value)) {
       result = {
         minLength: true,
       };

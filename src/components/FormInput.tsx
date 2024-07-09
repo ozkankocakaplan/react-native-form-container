@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
-  TextInputProps,
   TouchableOpacity,
-  ActivityIndicator,
   Platform,
   StyleSheet,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
   Text,
 } from 'react-native';
-import { FormInputProps } from 'react-native-form-container';
-
-
-
-
+import {FormInputProps} from 'react-native-form-container';
 
 export default function FormInput({
   iconPosition = 'left',
@@ -24,13 +15,13 @@ export default function FormInput({
   inputSize = 'md',
   enableFocusBorder = true,
   errorMessage,
-  required = false,
+  required,
   passwordHideIcon,
   passwordShowIcon,
   activeBorder = 'green',
   inputBorder = '#143722',
   errorMessageComponent,
-  errorMessageTextStyle = { color: 'red', marginTop: 5 },
+  errorMessageTextStyle = {color: 'red', marginTop: 5},
   errorMessageContainerStyle,
   ...props
 }: FormInputProps) {
@@ -83,14 +74,14 @@ export default function FormInput({
       />
       {props.secureTextEntry && (
         <TouchableOpacity
-          style={[styles.passwordIcon, { top: iconTop, right: 10 }]}
+          style={[styles.passwordIcon, {top: iconTop, right: 10}]}
           onPress={() => setPasswordShow(!passwordShow)}>
           {passwordShow ? passwordShowIcon() : passwordHideIcon()}
         </TouchableOpacity>
       )}
 
       {iconPosition === 'right' && icon !== undefined && (
-        <View style={[styles.icon, { top: iconTop, right: 10 }]}>{icon()}</View>
+        <View style={[styles.icon, {top: iconTop, right: 10}]}>{icon()}</View>
       )}
       {errorMessage && (
         <View style={errorMessageContainerStyle}>
