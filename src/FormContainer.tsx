@@ -1,41 +1,43 @@
-import React, {ReactNode, useCallback, useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {isValidation, checkPasswordOptions} from './Validation';
-import {FormContainerProps} from 'react-native-form-container';
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import { View } from "react-native";
+import { isValidation, checkPasswordOptions } from "./Validation";
+import { FormContainerProps } from "react-native-form-container";
 
 export default function FormContainer(props: FormContainerProps) {
   const {
     children: initialChildren,
     formContainerRef,
-    errorMessageField = 'errorMessage',
+    errorMessageField = "errorMessage",
   } = props;
   const [children, setChildren] = useState<ReactNode[] | any>(
-    React.Children.toArray(initialChildren),
+    React.Children.toArray(initialChildren)
   );
-  const [errors, setErrors] = useState<{[key: string]: string | undefined}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
+    {}
+  );
   const checkValidation = useCallback((errorData: any) => {
     handleErrorMessage(errorData);
   }, []);
 
   const inputCheckValidation = useCallback((): boolean => {
     let isEmpty = true;
-    React.Children.forEach(initialChildren, child => {
+    React.Children.forEach(initialChildren, (child) => {
       if (React.isValidElement(child)) {
-        const childProps = {...child.props};
+        const childProps = { ...child.props };
         if (childProps.id) {
           let checkValidation = childProps?.validation;
           if (checkValidation) {
             let result = isValidation(
               childProps?.validation,
               childProps?.value,
-              childProps?.passwordOptions,
+              childProps?.passwordOptions
             );
             if (!result) {
               isEmpty = false;
             }
           } else {
             if (
-              (childProps.required && childProps?.value === '') ||
+              (childProps.required && childProps?.value === "") ||
               childProps.value === undefined
             ) {
               isEmpty = false;
@@ -68,30 +70,29 @@ export default function FormContainer(props: FormContainerProps) {
   }, []);
   useEffect(() => {
     setChildren(
-      React.Children.map(initialChildren, child => {
+      React.Children.map(initialChildren, (child) => {
         if (React.isValidElement(child)) {
-          var childProps = {...child.props};
+          var childProps = { ...child.props };
 
           if (childProps.id) {
             if (childProps.required) {
               let error = errors?.[childProps.id];
-              let validationCheck = childProps?.validation || 'text';
+              let validationCheck = childProps?.validation || "text";
 
               if (validationCheck) {
                 let result = isValidation(
-                  childProps?.validation || 'text',
+                  childProps?.validation || "text",
                   childProps?.value,
                   childProps?.passwordOptions,
-                  childProps?.pattern,
+                  childProps?.pattern
                 );
-                console.log('result', result);
                 if (!result) {
-                  let validation = childProps?.validation || 'text';
-                  if (validation === 'password') {
+                  let validation = childProps?.validation || "text";
+                  if (validation === "password") {
                     let errorOptions = checkPasswordOptions(
                       childProps?.passwordOptions,
                       childProps?.value,
-                      childProps?.id,
+                      childProps?.id
                     );
                     let findKeyErrorOptions = Object.keys(errorOptions)[0];
                     childProps[errorMessageField] =
@@ -99,7 +100,7 @@ export default function FormContainer(props: FormContainerProps) {
                   } else {
                     if (error) {
                       let validationOrIdErroMessageField =
-                        childProps?.value === ''
+                        childProps?.value === ""
                           ? error
                           : errors?.[validation] || error
                           ? errors?.[validation] || error
@@ -112,7 +113,7 @@ export default function FormContainer(props: FormContainerProps) {
                 }
               } else {
                 if (
-                  (childProps?.value === '' ||
+                  (childProps?.value === "" ||
                     childProps?.value === undefined) &&
                   error
                 ) {
@@ -124,7 +125,7 @@ export default function FormContainer(props: FormContainerProps) {
                 }
               }
             }
-            if (childProps.type === 'checkbox') {
+            if (childProps.type === "checkbox") {
               if (!childProps.checked) {
                 let error = errors[childProps.id];
                 if (error) {
@@ -140,7 +141,7 @@ export default function FormContainer(props: FormContainerProps) {
           return React.cloneElement(child, childProps);
         }
         return child;
-      }),
+      })
     );
   }, [initialChildren, errors]);
   return <View {...props}>{children}</View>;
