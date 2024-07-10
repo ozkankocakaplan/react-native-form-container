@@ -101,7 +101,6 @@ export default function App() {
 | PropType         | Description                                                                                          |
 | ---------------- | ---------------------------------------------------------------------------------------------------- |
 | style            | PropTypes.object                                                                                     |
-| formId           | PropTypes.string                                                                                     |
 | formContainerRef | PropTypes.oneOfType([ PropTypes.func, PropTypes.shape({ current: PropTypes.instanceOf(Element) }) ]) |
 
 ## Form Validation
@@ -223,3 +222,32 @@ export default function App() {
   );
 }
 ```
+### FormInputProps
+
+The `FormInput` component accepts the following props:
+
+| Prop              | Type                        | Description                                                                                          |
+| ----------------- | --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| value             | string                      | The value of the input field.                                                                         |
+| onChangeText      | function                    | Callback function to handle text changes.                                                            |
+| placeholder       | string                      | Placeholder text for the input field.                                                                 |
+| id                | string                      | Unique identifier for the input field. Required for validation.                                       |
+| required          | boolean                     | Specifies whether the input field is required. If true, `id` must be provided.                        |
+| pattern           | string                      | Regex pattern for input validation. This works only if the `validation` prop is provided.             |
+| validation        | oneOf(['email', 'password', 'text', 'phone', 'number']) | Specifies the type of input for predefined validation patterns.                                       |
+| passwordOptions   | object                      | Additional options for password validation. See below for details.                                    |
+
+### passwordOptions
+
+When the `validation` prop is set to `password`, the following `passwordOptions` can be specified:
+
+| Option      | Type    | Description                                                                          |
+| ----------- | ------- | ------------------------------------------------------------------------------------ |
+| minLength   | number  | Minimum length of the password. Default value is 8.                                   |
+| special     | boolean | Checks if the password contains special characters.                                   |
+| upperCase   | boolean | Checks if the password contains uppercase letters.                                    |
+| lowerCase   | boolean | Checks if the password contains lowercase letters.                                    |
+| number      | boolean | Checks if the password contains numbers.                                              |
+
+These validation rules are optional but can be specified to enforce stricter password criteria.
+
