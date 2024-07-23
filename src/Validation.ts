@@ -36,7 +36,7 @@ export const ValidationFields = {
   },
   text: {
     pattern: {
-      value: /^[a-zA-Z]*$/,
+      value: /.*/,
     },
   },
   phone: {
