@@ -30,7 +30,8 @@ export default function FormContainer(props: FormContainerProps) {
             let result = isValidation(
               childProps?.validation,
               childProps?.value,
-              childProps?.passwordOptions
+              childProps?.passwordOptions,
+              childProps?.pattern
             );
             if (!result) {
               isEmpty = false;
